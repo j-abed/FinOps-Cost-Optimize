@@ -1,0 +1,46 @@
+{
+  "properties": {
+    "displayName": "Enforce Azure Hybrid Benefit for Windows",
+    "policyType": "Custom",
+    "mode": "All",
+    "description": "This policy will enforce usage of hybrid use benefit for Windows VMs.",
+    "policyRule": {
+      "if": {
+        "allOf": [
+          {
+            "field": "type",
+            "in": [
+              "Microsoft.Compute/virtualMachines",
+              "Microsoft.Compute/VirtualMachineScaleSets"
+            ]
+          },
+          {
+            "field": "Microsoft.Compute/imagePublisher",
+            "in": [
+              "MicrosoftWindowsServer",
+              "MicrosoftWindowsDesktop"
+            ]
+          },
+          {
+            "field": "Microsoft.Compute/imageOffer",
+            "in": [
+              "WindowsServer",
+              "Windows-10",
+              "Windows-11"
+            ]
+          },
+          {
+            "field": "Microsoft.Compute/licenseType",
+            "notin": [
+              "Windows_Server",
+              "Windows_Client"
+            ]
+          }
+        ]
+      },
+      "then": {
+        "effect": "deny"
+      }
+    }
+  }
+}

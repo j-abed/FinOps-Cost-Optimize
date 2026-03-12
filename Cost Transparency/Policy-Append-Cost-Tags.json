@@ -1,0 +1,133 @@
+{
+  "properties": {
+    "displayName": "appendtags",
+    "policyType": "Custom",
+    "mode": "Indexed",
+    "metadata": {
+      "description": "Add cost tags and its value to resources. Does not apply to resource groups."
+    },
+    "parameters": {
+      "tagName1": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Tag Name 1",
+          "description": "Name of first tag, such as 'Workload name'"
+        }
+      },
+      "tagValue1": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Tag Value1",
+          "description": "Value of the tag, such as 'Workload name'"
+        }
+      },
+      "tagName2": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Tag Name 2",
+          "description": "Name of second tag, such as 'Business unit'"
+        }
+      },
+      "tagValue2": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Tag Value2",
+          "description": "Value of the tag, such as 'Business unit'"
+        }
+      },
+      "tagName3": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Tag Name 3",
+          "description": "Name of third tag, such as 'Budget required/approved'"
+        }
+      },
+      "tagValue3": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Tag Value4",
+          "description": "Value of the tag, such as 'Budget required/approved'"
+        }
+      },
+      "tagName4": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Tag Name 4",
+          "description": "Name of fourth tag, such as 'Cost center'"
+        }
+      },
+      "tagValue4": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Tag Value4",
+          "description": "Value of the tag, such as 'Cost center'"
+        }
+      },
+      "tagName5": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Tag Name 5",
+          "description": "Name of fifth tag, such as 'Environment'"
+        }
+      },
+      "tagValue5": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Tag Value5",
+          "description": "Value of the tag, such as 'Environment'"
+        }
+      }
+    },
+    "policyRule": {
+      "if": {
+        "allOf": [
+          {
+            "field": "[concat('tags[', parameters('tagName1'),  ']')]",
+            "exists": "false"
+          },
+          {
+            "field": "[concat('tags[', parameters('tagName2'),  ']')]",
+            "exists": "false"
+          },
+          {
+            "field": "[concat('tags[', parameters('tagName3'),  ']')]",
+            "exists": "false"
+          },
+          {
+            "field": "[concat('tags[', parameters('tagName4'),  ']')]",
+            "exists": "false"
+          },
+          {
+            "field": "[concat('tags[', parameters('tagName5'),  ']')]",
+            "exists": "false"
+          }
+        ]
+      },
+      "then": {
+        "effect": "append",
+        "details": [
+          {
+            "field": "[concat('tags[', parameters('tagName1'), ']')]",
+            "value": "[parameters('tagValue1')]"
+          },
+          {
+            "field": "[concat('tags[', parameters('tagName2'), ']')]",
+            "value": "[parameters('tagValue2')]"
+          },
+          {
+            "field": "[concat('tags[', parameters('tagName3'), ']')]",
+            "value": "[parameters('tagValue3')]"
+          },
+          {
+            "field": "[concat('tags[', parameters('tagName4'), ']')]",
+            "value": "[parameters('tagValue4')]"
+          },
+          {
+            "field": "[concat('tags[', parameters('tagName5'), ']')]",
+            "value": "[parameters('tagValue5')]"
+          }
+        ]
+      }
+    }
+  }
+}

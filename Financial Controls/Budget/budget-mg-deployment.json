@@ -1,0 +1,262 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-08-01/managementGroupDeploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "budgetName": {
+            "defaultValue": "MyBudget",
+            "type": "String",
+            "metadata": {
+                "description": "Name of the Budget. It should be unique within a management group."
+            }
+        },
+        "amount": {
+            "defaultValue": "1000",
+            "type": "String",
+            "metadata": {
+                "description": "The total amount of cost or usage to track with the budget"
+            }
+        },
+        "categoryType": {
+            "defaultValue": "cost",
+			"allowedValues": [
+				"Cost",
+				"Usage"
+			],
+            "type": "String",
+            "metadata": {
+                "description": "The category of the budget, whether the budget tracks cost or usage."
+            }
+        },
+        "timeGrain": {
+            "defaultValue": "Monthly",
+            "allowedValues": [
+                "Monthly",
+                "Quarterly",
+                "Annually"
+            ],
+            "type": "String",
+            "metadata": {
+                "description": "The time covered by a budget. Tracking of the amount will be reset based on the time grain."
+            }
+        },
+        "startDate": {
+            "type": "String",
+            "metadata": {
+                "description": "The start date must be first of the month in YYYY-MM-DD format. Future start date should not be more than three months. Past start date should be selected within the timegrain preiod."
+            }
+        },
+        "endDate": {
+            "type": "String",
+            "metadata": {
+                "description": "The end date for the budget in YYYY-MM-DD format."
+            }
+        },
+        "firstThreshold": {
+            "defaultValue": "90",
+            "type": "String",
+            "metadata": {
+                "description": "Threshold value associated with a notification. Notification is sent when the cost exceeded the threshold. The number must be between 0 and 100."
+            }
+        },
+        "firstThresholdType": {
+            "defaultValue": "Actual",
+            "type": "string",
+            "allowedValues": [
+                "Actual",
+                "Forecasted"
+            ],
+            "metadata": {
+                "description":  "Threshold Type value associated with a notification.  It can be either Actual or Forecasted"
+            }
+        },
+        "secondThreshold": {
+            "defaultValue": "110",
+            "type": "String",
+            "metadata": {
+                "description": "Threshold value associated with a notification. Notification is sent when the cost exceeded the threshold. THe number must be between 0 and 1000."
+            }
+        },
+        "secondThresholdType": {
+            "defaultValue": "Actual",
+            "type": "string",
+            "allowedValues": [
+                "Actual",
+                "Forecasted"
+            ],
+            "metadata": {
+                "description":  "Threshold Type value associated with a notification.  It can be either Actual or Forecasted"
+            }
+        },
+        "contactRoles": {
+            "defaultValue": [
+                "Owner",
+                "Contributor",
+                "Reader"
+            ],
+            "type": "Array",
+            "metadata": {
+                "description": "The list of contact roles to send the budget notification to when the threshold is exceeded."
+            }
+        },
+        "contactEmails": {
+            "type": "Array",
+            "metadata": {
+                "description": "The list of email addresses to send the budget notification to when the threshold is exceeded. Comma-separated list of email addresses to filter on. Enclosed in double quotes and brackets [] "
+            }
+        },
+        "contactGroups": {
+            "type": "Array",
+            "metadata": {
+                "description": "The list of action groups to send the budget notification to when the threshold is exceeded. Comma-separated list of action groups to filter on. Enclosed in double quotes and brackets []"
+            }
+        },
+        "resourceGroupFilterValues": {
+            "type": "Array",
+            "metadata": {
+                "description": "Comma-separated list of resource groups to filter on. Enclosed in double quotes and brackets []."
+            }
+        },
+        "meterFilterValues": {
+            "type": "Array",
+            "metadata": {
+                "description": "Comma-separated list of resource groups to filter on. Enclosed in double quotes and brackets []."
+            }
+        },
+        "meterCategoryFilterValues": {
+            "type": "Array",
+            "defaultValue": [
+                //   *** Uncomment applicable Meter Categories and delete the last trailing comma ***
+                // "Advanced Threat Protection",
+                // "API Management",
+                // "App Center",
+                // "Application Gateway",
+                // "Application Insights",
+                // "Automation",
+                // "Azure Active Directory B2C",
+                // "Azure Active Directory Domain Services",
+                // "Azure Analysis Services",
+                // "Azure App Service",
+                // "Azure Bot Service",
+                // "Azure Container Service",
+                // "Azure Cosmos DB",
+                // "Azure Data Factory",
+                // "Azure Data Factory v2",
+                // "Azure Database for MySQL",
+                // "Azure Database for PostgreSQL",
+                // "Azure Database Migration Service",
+                // "Azure Databricks",
+                // "Azure DDOS Protection",
+                // "Azure DevOps",
+                // "Azure DNS",
+                // "Azure Firewall",
+                // "Azure Front Door Service",
+                // "Azure Lab Services",
+                // "Azure Maps",
+                // "Azure Monitor",
+                // "Azure Search",
+                // "Azure Site Recovery",
+                // "Backup",
+                // "Bandwidth",
+                // "BizTalk Services",
+                // "Cloud Services",
+                // "Cognitive Services",
+                // "Container Instances",
+                // "Container Registry",
+                // "Content Delivery Network",
+                // "Data Box",
+                // "Data Catalog",
+                // "Data Lake Analytics",
+                // "Data Lake Store",
+                // "Datacenter Capacity",
+                // "Dynamics 365 for Customer Insights",
+                // "Event Grid",
+                // "Event Hubs",
+                // "ExpressRoute",
+                // "Functions",
+                // "HDInsight",
+                // "Insight and Analytics",
+                // "IoT Central",
+                // "IoT Hub",
+                // "Key Vault",
+                // "Load Balancer",
+                // "Log Analytics",
+                // "Logic Apps",
+                // "Machine Learning Service",
+                // "Machine Learning Studio",
+                // "Media Services",
+                // "Microsoft Genomics",
+                // "Multi-Factor Authentication",
+                // "MySQL Database on Azure",
+                // "Network Watcher",
+                // "Notification Hubs",
+                // "Power BI Embedded",
+                // "Redis Cache",
+                // "Scheduler",
+                // "Security Center",
+                // "Service Bus",
+                // "Service Fabric",
+                // "Service Fabric Mesh",
+                // "SignalR",
+                // "Sonar DaaS",
+                // "Specialized Compute",
+                // "SQL Advanced Threat Protection",
+                // "SQL Data Warehouse",
+                // "SQL Database",
+                // "SQL Server Stretch Database",
+                // "Storage",
+                // "StorSimple",
+                // "Stream Analytics",
+                // "Time Series Insights",
+                // "Traffic Manager",
+                // "Virtual Machines",
+                // "Virtual Machines Licenses",
+                // "Virtual Network",
+                // "Virtual WAN",
+                // "Visual Studio Subscription",
+                // "VPN Gateway",
+                // "Windows 10 IoT Core Services",
+                // "Xamarin University"
+            ],
+            "metadata": {
+                "description": "Comma-separated list of meter categories to filter on. Enclosed in double quotes and brackets []. Mandatory if using the usage category"
+            }
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Consumption/budgets",
+            "apiVersion": "2019-10-01",
+            "name": "[parameters('budgetName')]",
+            "properties": {
+                "timePeriod": {
+                    "startDate": "[parameters('startDate')]",
+                    "endDate": "[parameters('endDate')]"
+                },
+                "timeGrain": "[parameters('timeGrain')]",
+                "amount": "[parameters('amount')]",
+                "category": "[parameters('categoryType')]",
+                "notifications": {
+                    "NotificationForExceededBudget1": {
+                        "enabled": true,
+                        "operator": "GreaterThan",
+                        "threshold": "[parameters('firstThreshold')]",
+                        "thresholdType": "[parameters('firstThresholdType')]",
+                        "contactEmails": "[parameters('contactEmails')]",
+                        "contactRoles": "[parameters('contactRoles')]",
+                        "contactGroups": "[parameters('contactGroups')]"
+                    },
+                    "NotificationForExceededBudget2": {
+                        "enabled": true,
+                        "operator": "GreaterThan",
+                        "threshold": "[parameters('secondThreshold')]",
+                        "thresholdType": "[parameters('secondThresholdType')]",
+                        "contactEmails": "[parameters('contactEmails')]",
+                        "contactRoles": "[parameters('contactRoles')]",
+                        "contactGroups": "[parameters('contactGroups')]"
+                    }
+                }
+            }
+        }
+    ]
+}

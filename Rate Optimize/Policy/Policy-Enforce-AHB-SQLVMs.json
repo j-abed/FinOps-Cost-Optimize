@@ -1,0 +1,32 @@
+{
+  "properties": {
+    "displayName": "Enforce Azure Hybrid Benefit for SQL",
+    "policyType": "Custom",
+    "mode": "All",
+    "description": "This policy will enforce usage of hybrid use benefit for SQL resources.",
+    "policyRule": {
+      "if": {
+        "allOf": [
+          {
+            "field": "type",
+            "equals": "Microsoft.SqlVirtualMachine/SqlVirtualMachines"
+          },
+          {
+            "field": "Microsoft.SqlVirtualMachine/SqlVirtualMachines/sqlImageSku",
+            "in": [
+              "Standard",
+              "Enterprise"
+            ]
+          },
+          {
+            "field": "Microsoft.SqlVirtualMachine/SqlVirtualMachines/sqlServerLicenseType",
+            "notequals": "AHUB"
+          }
+        ]
+      },
+      "then": {
+        "effect": "deny"
+      }
+    }
+  }
+}

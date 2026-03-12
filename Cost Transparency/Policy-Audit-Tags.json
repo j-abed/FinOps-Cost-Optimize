@@ -1,0 +1,77 @@
+{
+  "properties": {
+    "displayName": "requiretagsonresources",
+    "policyType": "Custom",
+    "mode": "Indexed",
+		  "description": "This policy enables you to audit Cost Transparency tags",
+    "metadata": {
+   "category": "Tags"
+    },
+    "parameters": {
+      "tagName1": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Tag Name 1",
+          "description": "Name of first tag, such as 'Workload name'"
+        }
+      },
+      "tagName2": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Tag Name 2",
+          "description": "Name of second tag, such as 'Business unit'"
+        }
+      },
+      "tagName3": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Tag Name 3",
+          "description": "Name of third tag, such as 'Budget required/approved'"
+        }
+      },
+      "tagName4": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Tag Name 4",
+          "description": "Name of fourth tag, such as 'Cost center'"
+        }
+      },
+      "tagName5": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Tag Name 5",
+          "description": "Name of fifth tag, such as 'Environment'"
+        }
+      }
+    },
+    "policyRule": {
+      "if": {
+        "allOf": [
+          {
+            "field": "[concat('tags[', parameters('tagName1'),  ']')]",
+            "exists": "false"
+          },
+          {
+            "field": "[concat('tags[', parameters('tagName2'),  ']')]",
+            "exists": "false"
+          },
+          {
+            "field": "[concat('tags[', parameters('tagName3'),  ']')]",
+            "exists": "false"
+          },
+          {
+            "field": "[concat('tags[', parameters('tagName4'),  ']')]",
+            "exists": "false"
+          },
+          {
+            "field": "[concat('tags[', parameters('tagName5'),  ']')]",
+            "exists": "false"
+          }
+        ]
+      },
+      "then": {
+        "effect": "audit"
+      }
+    }
+  }
+}
