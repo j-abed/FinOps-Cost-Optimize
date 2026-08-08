@@ -21,8 +21,21 @@
 
 workflow StopAksCluster
 {
-$ResourceGroupName = "Wasteful-rg"
-$Name = "WastefulK8S"
+param(
+    [Parameter(Mandatory = $true)]
+    [string]$ResourceGroupName,
+
+    [Parameter(Mandatory = $true)]
+    [string]$Name,
+
+    [bool]$Execute = $false
+)
+
+if (-not $Execute)
+{
+    Write-Warning "The AKS cluster was not stopped. Set Execute to true after reviewing the target."
+    return
+}
 
 # Ensures you do not inherit an AzContext in your runbook
 Disable-AzContextAutosave -Scope Process

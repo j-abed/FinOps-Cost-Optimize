@@ -10,14 +10,15 @@
             }
         },
         "amount": {
-            "defaultValue": "1000",
-            "type": "String",
+            "defaultValue": 1000,
+            "type": "Int",
+            "minValue": 1,
             "metadata": {
                 "description": "The total amount of cost or usage to track with the budget"
             }
         },
         "categoryType": {
-            "defaultValue": "cost",
+            "defaultValue": "Cost",
 			"allowedValues": [
 				"Cost",
 				"Usage"
@@ -52,10 +53,12 @@
             }
         },
         "firstThreshold": {
-            "defaultValue": "90",
-            "type": "String",
+            "defaultValue": 90,
+            "type": "Int",
+            "minValue": 0,
+            "maxValue": 1000,
             "metadata": {
-                "description": "Threshold value associated with a notification. Notification is sent when the cost exceeded the threshold. The number must be between 0 and 100."
+                "description": "Threshold percentage associated with a notification. The number must be between 0 and 1000."
             }
         },
         "firstThresholdType": {
@@ -70,10 +73,12 @@
             }
         },
         "secondThreshold": {
-            "defaultValue": "110",
-            "type": "String",
+            "defaultValue": 110,
+            "type": "Int",
+            "minValue": 0,
+            "maxValue": 1000,
             "metadata": {
-                "description": "Threshold value associated with a notification. Notification is sent when the cost exceeded the threshold. THe number must be between 0 and 1000."
+                "description": "Threshold percentage associated with a notification. The number must be between 0 and 1000."
             }
         },
         "secondThresholdType": {
