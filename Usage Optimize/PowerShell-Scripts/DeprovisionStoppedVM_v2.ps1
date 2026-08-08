@@ -19,6 +19,11 @@
 
 #>
 
+[CmdletBinding()]
+param(
+    [switch]$Execute
+)
+
 <# Instructions to use this script
 
 1. Set the file path for the CSV ($CsvFilePath)
@@ -137,6 +142,12 @@ function remove()
 
         Stop-AzVM -ResourceGroupName $ResourceGroupName -Name $VMName -Force
     }
+}
+
+if (-not $Execute)
+{
+    Write-Warning "No virtual machines were changed. Re-run with -Execute after reviewing the CSV input."
+    return
 }
 
 Try

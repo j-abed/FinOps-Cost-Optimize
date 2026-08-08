@@ -19,6 +19,11 @@
 
 #>
 
+[CmdletBinding()]
+param(
+    [switch]$Execute
+)
+
 <# Instructions to use this script
 
 1. Set the file path for the CSV ($CsvFilePath)
@@ -131,6 +136,12 @@ function remove()
 
         Remove-AzResource -ResourceId $_."Resource ID" -Force
     }
+}
+
+if (-not $Execute)
+{
+    Write-Warning "No resources were changed. Re-run with -Execute after reviewing the CSV input."
+    return
 }
 
 Try

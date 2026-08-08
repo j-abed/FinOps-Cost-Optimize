@@ -1,10 +1,10 @@
 {
   "properties": {
-    "displayName": "appendtags",
+    "displayName": "Add or replace cost tags",
     "policyType": "Custom",
     "mode": "Indexed",
     "metadata": {
-      "description": "Add cost tags and its value to resources. Does not apply to resource groups."
+      "description": "Adds missing cost tags and replaces configured tag values on resources. Does not apply to resource groups."
     },
     "parameters": {
       "tagName1": {
@@ -80,7 +80,7 @@
     },
     "policyRule": {
       "if": {
-        "allOf": [
+        "anyOf": [
           {
             "field": "[concat('tags[', parameters('tagName1'),  ']')]",
             "exists": "false"
@@ -104,29 +104,39 @@
         ]
       },
       "then": {
-        "effect": "append",
-        "details": [
-          {
-            "field": "[concat('tags[', parameters('tagName1'), ']')]",
-            "value": "[parameters('tagValue1')]"
-          },
-          {
-            "field": "[concat('tags[', parameters('tagName2'), ']')]",
-            "value": "[parameters('tagValue2')]"
-          },
-          {
-            "field": "[concat('tags[', parameters('tagName3'), ']')]",
-            "value": "[parameters('tagValue3')]"
-          },
-          {
-            "field": "[concat('tags[', parameters('tagName4'), ']')]",
-            "value": "[parameters('tagValue4')]"
-          },
-          {
-            "field": "[concat('tags[', parameters('tagName5'), ']')]",
-            "value": "[parameters('tagValue5')]"
-          }
-        ]
+        "effect": "modify",
+        "details": {
+          "roleDefinitionIds": [
+            "/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
+          ],
+          "operations": [
+            {
+              "operation": "addOrReplace",
+              "field": "[concat('tags[', parameters('tagName1'), ']')]",
+              "value": "[parameters('tagValue1')]"
+            },
+            {
+              "operation": "addOrReplace",
+              "field": "[concat('tags[', parameters('tagName2'), ']')]",
+              "value": "[parameters('tagValue2')]"
+            },
+            {
+              "operation": "addOrReplace",
+              "field": "[concat('tags[', parameters('tagName3'), ']')]",
+              "value": "[parameters('tagValue3')]"
+            },
+            {
+              "operation": "addOrReplace",
+              "field": "[concat('tags[', parameters('tagName4'), ']')]",
+              "value": "[parameters('tagValue4')]"
+            },
+            {
+              "operation": "addOrReplace",
+              "field": "[concat('tags[', parameters('tagName5'), ']')]",
+              "value": "[parameters('tagValue5')]"
+            }
+          ]
+        }
       }
     }
   }

@@ -1,0 +1,7 @@
+[project]
+name = "finops-cost-optimize"
+version = "0.1.0"
+description = "Validation tooling for Azure FinOps policies, templates, and scripts"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = []
